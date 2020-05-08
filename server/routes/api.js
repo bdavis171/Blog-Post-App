@@ -22,10 +22,18 @@ router.post('/',authenticateToken,(req,res) => {
     });
 });
 
-// GET: read all posts
-router.get('/',authenticateToken,(req,res) => {
-    // res.send('all blog posts read');
+// GET: read your posts
+router.get('/yourposts',authenticateToken,(req,res) => {
+    // res.send('user blog posts read');
     BlogCollection.find({author: req.user.email},(errors,results) => {
+        errors ? res.send(errors):res.send(results);
+    });
+});
+
+// GET: read all posts
+router.get('/',(req,res) => {
+    // res.send('all blog posts read');
+    BlogCollection.find((errors,results) => {
         errors ? res.send(errors):res.send(results);
     });
 });
